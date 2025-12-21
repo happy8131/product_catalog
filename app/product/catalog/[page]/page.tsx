@@ -27,7 +27,7 @@ export default async function ProductCatalogPage({ params, searchParams }) {
     );
 
     const result = await res.json();
-    console.log(result);
+    //  console.log(result);
     const { list, total, pageRequestDTO } = result;
     return (
         <div>
