@@ -19,10 +19,11 @@ export default async function ProductViewPage({ params, searchParams }) {
 
     const res = await fetch(`http://localhost:8080/api/products/${pno}`);
     const product = await res.json();
-    console.log(product);
+    //   console.log(product);
 
     const query = await searchParams;
 
+    console.log('query', query);
     const from = query.from
         ? decodeURIComponent(query.from)
         : '/product/catalog/1';

@@ -3,7 +3,7 @@ import ProductSearchCP from '@/components/product/productSearchFormCP';
 
 export default async function ProductQueryPage({ params, searchParams }) {
     const queryObj = await searchParams;
-
+    console.log('queryObj', queryObj);
     const pageStr = queryObj.page ?? '1';
     const sizeStr = queryObj.size ?? '10';
     const sortStr = queryObj.sort ?? '';
@@ -26,8 +26,6 @@ export default async function ProductQueryPage({ params, searchParams }) {
     );
 
     const result = await res.json();
-
-    console.log(result);
 
     return (
         <div>
