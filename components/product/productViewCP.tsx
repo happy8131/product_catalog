@@ -87,6 +87,13 @@ export default function ProductViewCP({
                             구매하기
                         </button>
                     </div>
+                    <Link href={`/product/edit/${product.pno}?from=${from}`}>
+                        <div>
+                            <button className="w-full px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors duration-200">
+                                수정/삭제
+                            </button>
+                        </div>
+                    </Link>
                 </div>
             </div>
             {/* 이전 화면 버튼 */}
