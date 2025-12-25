@@ -39,7 +39,7 @@ export const postProduct = async (prevState: any, formData: FormData) => {
         throw new Error('Failed to create product');
     }
 
-    revalidatePath('/product/catalog/1');
+    revalidatePath('/product/catalog/1'); //새로된 캐시 데이터
 
     return { message: 'Product created successfully', result: 'success' };
 };

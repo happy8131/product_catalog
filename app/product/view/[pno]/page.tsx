@@ -1,5 +1,13 @@
 import ProductViewCP from '@/components/product/productViewCP';
 
+type PageParams = { [key: string]: string };
+type SearchParams = { [key: string]: string };
+
+type PageProps = {
+    params: Promise<PageParams>; // Next.js 15: Promise
+    searchParams: Promise<SearchParams>; // Next.js 15: Promise
+};
+
 export async function generateStaticParams() {
     // const res = await fetch(
     //     `http://localhost:8080/api/products/event?count=10`
@@ -11,8 +19,11 @@ export async function generateStaticParams() {
 
     return arr;
 }
-
-export default async function ProductViewPage({ params, searchParams }) {
+//SSG
+export default async function ProductViewPage({
+    params,
+    searchParams,
+}: PageProps) {
     const param = await params;
 
     const pno = param.pno;
