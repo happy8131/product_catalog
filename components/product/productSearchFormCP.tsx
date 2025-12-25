@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 export default function ProductSearchCP() {
-    const searchParams = useSearchParams();
+    const searchParams = useSearchParams(); //브라우저 쿼리 스트링 처리
     const router = useRouter();
 
     //URL에서 초기 값 가져오기

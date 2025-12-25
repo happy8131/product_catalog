@@ -1,7 +1,18 @@
 import ProductQueryListCP from '@/components/product/productQueryListCP';
 import ProductSearchCP from '@/components/product/productSearchFormCP';
 
-export default async function ProductQueryPage({ params, searchParams }) {
+type PageParams = { [key: string]: string };
+type SearchParams = { [key: string]: string };
+
+type PageProps = {
+    params: Promise<PageParams>; // Next.js 15: Promise
+    searchParams: Promise<SearchParams>; // Next.js 15: Promise
+};
+
+export default async function ProductQueryPage({
+    params,
+    searchParams,
+}: PageProps) {
     const queryObj = await searchParams;
     console.log('queryObj', queryObj);
     const pageStr = queryObj.page ?? '1';

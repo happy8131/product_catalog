@@ -3,7 +3,7 @@ import ProductEditCP from '@/components/product/productEditCP';
 type PageParams = { [key: string]: string };
 type SearchParams = { [key: string]: string };
 
-type PageProps = {
+export type PageProps = {
     params: Promise<PageParams>; // Next.js 15: Promise
     searchParams: Promise<SearchParams>; // Next.js 15: Promise
 };

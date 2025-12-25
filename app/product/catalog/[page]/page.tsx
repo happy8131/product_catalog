@@ -1,4 +1,12 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import ProductCatalogCP from '@/components/product/productCatalogCP';
+
+type PageProps = {
+    params: Promise<{
+        page: string;
+    }>;
+    searchParams: Promise<{}>;
+};
 
 export async function generateStaticParams() {
     // const res = await fetch(
@@ -14,8 +22,11 @@ export async function generateStaticParams() {
     const arr = [{ page: '1' }, { page: '2' }];
     return arr;
 }
-
-export default async function ProductCatalogPage({ params, searchParams }) {
+//ISR
+export default async function ProductCatalogPage({
+    params,
+    searchParams,
+}: PageProps) {
     const param = await params;
 
     const pageStr = param.page || '1';
@@ -23,7 +34,7 @@ export default async function ProductCatalogPage({ params, searchParams }) {
 
     const res = await fetch(
         `http://localhost:8080/api/products/list?page=${pageStr}&size=${sizeStr}`,
-        { next: { revalidate: 10 } }
+        { next: { revalidate: 60 * 60 * 24 } }
     );
 
     const result = await res.json();
