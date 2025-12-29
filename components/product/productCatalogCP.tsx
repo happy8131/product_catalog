@@ -1,7 +1,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ProductCatalogCP({ products, total, current, size }) {
+interface ProductListDTO {
+    pno: number;
+    pname: string;
+    price: number;
+    writer: string;
+    sale: boolean;
+    fileName: string;
+}
+
+interface Props {
+    products: ProductListDTO[];
+    total: number;
+    current: number;
+    size: number;
+}
+
+export default function ProductCatalogCP({
+    products,
+    total,
+    current,
+    size,
+}: Props) {
     if (!products || products.length === 0) {
         throw new Error('No Products in this page');
     }
@@ -11,6 +32,7 @@ export default function ProductCatalogCP({ products, total, current, size }) {
     const next = current < lastPage;
     // console.log(products);
     const from = encodeURIComponent(`/product/catalog/${current}`);
+    console.log('test', from);
     return (
         <div className="p-4 sm:p-6 md:p-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
