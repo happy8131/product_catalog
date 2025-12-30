@@ -29,6 +29,7 @@ const nextConfig = {
             bodySizeLimit: '40mb', // 원하는 크기로 조절하세요 (예: '50mb', '100mb')
         },
     },
+    reactStrictMode: false,
 };
 
 export default nextConfig;
