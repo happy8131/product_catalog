@@ -1,8 +1,13 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import KakaoProvider from 'next-auth/providers/kakao';
 
 export const authOptions = {
     providers: [
+        KakaoProvider({
+            clientId: process.env.KAKAO_CLIENT_ID,
+            clientSecret: process.env.KAKAO_CLIENT_SECRET,
+        }),
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
@@ -47,19 +52,69 @@ export const authOptions = {
 
     callbacks: {
         async jwt({ token, user, account }) {
-            console.log('jwt...........');
-            if (user) {
-                token.id = user.email;
-                token.role = user.role; // 예를 들어, 사용자의 역할(Role)을 JWT에 포함
-                token.email = user.email;
-                token.name = user.nickname;
+            //kakao
+            if (account?.provider === 'kakao' && profile) {
+                const res = await fetch(
+                    'http://localhost:8080/api/accounts/social',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Cache-Control': 'no-store',
+                        },
+                        body: new URLSearchParams({
+                            email: profile.kakao_account.email,
+                        }),
+                    }
+                );
 
-                token.accessToken = user.accessToken;
-                token.refreshToken = user.refreshToken;
+                const result = await res.json();
+
+                token.id = result.email;
+                token.role = result.role;
+                token.email = result.email;
+                token.name = result.nickname;
+
+                token.accessToken = result.accessToken;
+                token.refreshToken = result.refreshToken;
                 token.accessTokenExpires = Date.now() + 1000 * 60 * 10; //10min
+
+                return token;
+            }
+            //자체 로그인
+            if (account?.provider === 'credentials') {
+                if (user) {
+                    token.id = user.email;
+                    token.role = user.role; // 예를 들어, 사용자의 역할(Role)을 JWT에 포함
+                    token.email = user.email;
+                    token.name = user.nickname;
+
+                    token.accessToken = user.accessToken;
+                    token.refreshToken = user.refreshToken;
+                    token.accessTokenExpires = Date.now() + 1000 * 60 * 10; //10min
+                }
             }
 
-            return token;
+            console.log(
+                '====================================================='
+            );
+
+            const remainTime = token.accessTokenExpires - Date.now();
+
+            console.log('remain time ' + remainTime);
+
+            console.log(
+                '====================================================='
+            );
+            console.log(
+                '-----------------------------------------------------'
+            );
+
+            if (remainTime < 0) {
+                return refreshAccessToken(token);
+            } else {
+                return token;
+            }
         },
 
         async session({ session, token }) {
