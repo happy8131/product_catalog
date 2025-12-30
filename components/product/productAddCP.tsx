@@ -1,8 +1,9 @@
 'use client';
 
 import { postProduct } from '@/actions/productActions';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 
 export default function ProductAddCP() {
     const [state, action, isPending] = useActionState(postProduct, {
@@ -10,7 +11,17 @@ export default function ProductAddCP() {
         result: '',
     });
 
+    const { data: session, status: sessionStatus } = useSession();
+
+    useEffect(() => {
+        if (sessionStatus === 'unauthenticated') {
+            alert('로그인 하세요');
+        }
+    }, [sessionStatus]);
+
     const router = useRouter();
+
+    console.log('productAddSession:', session);
 
     return (
         <div className="flex flex-col items-center justify-center p-6 bg-gray-100 min-h-screen">
@@ -87,7 +98,7 @@ export default function ProductAddCP() {
                             id="writer"
                             name="writer"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            placeholder="작성자를 입력하세요"
+                            defaultValue={session?.user?.email}
                         />
                     </div>
 
