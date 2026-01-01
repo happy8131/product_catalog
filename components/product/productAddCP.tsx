@@ -1,9 +1,8 @@
 'use client';
 
 import { postProduct } from '@/actions/productActions';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useActionState, useEffect } from 'react';
+import { useAuthCheck } from '@/hooks/useAuthCheck';
+import { useActionState } from 'react';
 
 export default function ProductAddCP() {
     const [state, action, isPending] = useActionState(postProduct, {
@@ -11,17 +10,9 @@ export default function ProductAddCP() {
         result: '',
     });
 
-    const { data: session, status: sessionStatus } = useSession();
+    const { session, router } = useAuthCheck();
 
-    useEffect(() => {
-        if (sessionStatus === 'unauthenticated') {
-            alert('로그인 하세요');
-        }
-    }, [sessionStatus]);
-
-    const router = useRouter();
-
-    console.log('productAddSession:', session);
+    console.log(session);
 
     return (
         <div className="flex flex-col items-center justify-center p-6 bg-gray-100 min-h-screen">
@@ -32,10 +23,7 @@ export default function ProductAddCP() {
 
                 {/* 메시지 표시 */}
                 {state.result === 'success' && (
-                    <div
-                        onClick={(e) => router.push('/product/catalog/1')}
-                        className="p-3 text-sm text-blue-700 bg-red-100 rounded-lg"
-                    >
+                    <div className="p-3 text-sm text-blue-700 bg-red-100 rounded-lg">
                         새로운 상품이 등록되었습니다.
                     </div>
                 )}
@@ -98,7 +86,9 @@ export default function ProductAddCP() {
                             id="writer"
                             name="writer"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            placeholder="작성자를 입력하세요"
                             defaultValue={session?.user?.email}
+                            readOnly
                         />
                     </div>
 
