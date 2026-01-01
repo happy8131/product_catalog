@@ -29,7 +29,7 @@ export default function ProductViewCP({
                     {/* 메인 이미지 */}
                     <div className="relative w-full h-96 rounded-lg overflow-hidden shadow-md">
                         <Image
-                            src={`http://localhost:8080/${product.fileNames[0]}`}
+                            src={`/api/backend/${product.fileNames[0]}`}
                             alt={product.pname}
                             fill
                             style={{ objectFit: 'cover' }}
@@ -46,7 +46,7 @@ export default function ProductViewCP({
                                 className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 cursor-pointer flex-shrink-0 border-transparent hover:border-blue-500 transition-colors duration-200`} // 클릭 시 mainImage 상태 변경
                             >
                                 <Image
-                                    src={`http://localhost:8080/s_${fileName}`}
+                                    src={`/api/backend/s_${fileName}`}
                                     alt={`${product.pname} thumbnail ${fileName}`}
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -87,13 +87,6 @@ export default function ProductViewCP({
                             구매하기
                         </button>
                     </div>
-                    <Link href={`/product/edit/${product.pno}?from=${from}`}>
-                        <div>
-                            <button className="w-full px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors duration-200">
-                                수정/삭제
-                            </button>
-                        </div>
-                    </Link>
                 </div>
             </div>
             {/* 이전 화면 버튼 */}
