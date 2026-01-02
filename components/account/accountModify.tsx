@@ -23,17 +23,17 @@ export default function AccountModifyCP() {
         return <div>Loading...</div>;
     }
 
-    // 2. data 객체의 존재 유무를 확인하는 타입 가드
-    if (session?.user) {
-        // 이제 TypeScript는 session.user가 존재함을 알고 있습니다.
-        const { email, name } = session.user;
-        return (
-            <div>
-                <p>이메일: {email}</p>
-                <p>이름: {name}</p>
-            </div>
-        );
-    }
+    // // 2. data 객체의 존재 유무를 확인하는 타입 가드
+    // if (session?.user) {
+    //     // 이제 TypeScript는 session.user가 존재함을 알고 있습니다.
+    //     const { email, name } = session.user;
+    //     return (
+    //         <div>
+    //             <p>이메일: {email}</p>
+    //             <p>이름: {name}</p>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div>
