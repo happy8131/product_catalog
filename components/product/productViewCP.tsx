@@ -1,3 +1,5 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,13 +13,14 @@ interface ProductDTO {
     createdDate: string; // or Date
 }
 
-export default function ProductViewCP({
+export default async function ProductViewCP({
     product,
     from,
 }: {
     product: ProductDTO;
     from: string;
 }) {
+    const session = await getServerSession(authOptions);
     console.log(product);
 
     return (
@@ -83,9 +86,15 @@ export default function ProductViewCP({
                     </p>
 
                     <div className="pt-4">
-                        <button className="w-full px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-200">
-                            구매하기
-                        </button>
+                        {session ? (
+                            <button className="w-full px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-200">
+                                구매하기
+                            </button>
+                        ) : (
+                            <button className="w-full px-8 py-3 bg-gray-400 text-white font-semibold rounded-lg shadow-md  transition-colors duration-200">
+                                로그인 후 구매 가능
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
