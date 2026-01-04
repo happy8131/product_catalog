@@ -2,13 +2,15 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export const useAuthCheck = () => {
+export const useAuthCheck = (move) => {
     const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
         if (status === 'unauthenticated') {
-            router.replace('/account/signin');
+            if (move) {
+                router.replace('/account/signin');
+            }
         }
     }, [status, router]);
 
