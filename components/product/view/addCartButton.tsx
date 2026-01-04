@@ -2,6 +2,7 @@
 
 import { useAuthCheck } from '@/hooks/useAuthCheck';
 import { useState } from 'react';
+import AddCartModal from './addCartModal';
 
 interface ProductDTO {
     pno: number;
@@ -21,6 +22,8 @@ export default function AddCartButton({
     from?: string;
 }) {
     const { session, router } = useAuthCheck(true);
+
+    const [show, setShow] = useState(false);
 
     const handleClickAdd = async (e: React.MouseEvent) => {
         const param = {
@@ -42,8 +45,6 @@ export default function AddCartButton({
         setShow(() => true);
     };
 
-    const [show, setShow] = useState(false);
-
     const closeModal = (value: string) => {
         setShow(() => false);
         if (value === 'c') {
@@ -56,6 +57,7 @@ export default function AddCartButton({
 
     return (
         <div className="pt-4">
+            {show && <AddCartModal closeModal={closeModal} />}
             {session?.user && (
                 <button
                     onClick={handleClickAdd}
