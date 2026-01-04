@@ -2,6 +2,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import AddCartButton from './view/addCartButton';
 
 interface ProductDTO {
     pno: number;
@@ -20,7 +21,7 @@ export default async function ProductViewCP({
     product: ProductDTO;
     from: string;
 }) {
-    const session = await getServerSession(authOptions);
+    // const session = await getServerSession(authOptions);
     console.log(product);
 
     return (
@@ -86,15 +87,7 @@ export default async function ProductViewCP({
                     </p>
 
                     <div className="pt-4">
-                        {session ? (
-                            <button className="w-full px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-200">
-                                구매하기
-                            </button>
-                        ) : (
-                            <button className="w-full px-8 py-3 bg-gray-400 text-white font-semibold rounded-lg shadow-md  transition-colors duration-200">
-                                로그인 후 구매 가능
-                            </button>
-                        )}
+                        <AddCartButton pno={product.pno} />
                     </div>
                 </div>
             </div>
