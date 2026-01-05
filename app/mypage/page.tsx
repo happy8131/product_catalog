@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
+import MyPageCartListCP from '@/components/mypage/mypageCartListCP';
 
 export default async function MyPage() {
     const session = await getServerSession(authOptions);
@@ -15,6 +16,7 @@ export default async function MyPage() {
             {session?.user?.email && (
                 <div>
                     <div>이미 로그인 된 사용자 {session.user.email}</div>
+                    <MyPageCartListCP />
                 </div>
             )}
         </div>

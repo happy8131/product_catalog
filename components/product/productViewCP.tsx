@@ -87,7 +87,7 @@ export default async function ProductViewCP({
                     </p>
 
                     <div className="pt-4">
-                        <AddCartButton pno={product.pno} />
+                        <AddCartButton product={product} />
                     </div>
                 </div>
             </div>

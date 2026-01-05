@@ -1,4 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import MenuCartCount from '@/components/menu/menuCartCount';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 
@@ -19,12 +20,15 @@ export default async function ProductLayout({ children }) {
                             상품 카탈로그
                         </Link>
                         {session ? (
-                            <Link
-                                href="/account/signout"
-                                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300"
-                            >
-                                로그아웃
-                            </Link>
+                            <>
+                                <MenuCartCount />
+                                <Link
+                                    href="/account/signout"
+                                    className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300"
+                                >
+                                    로그아웃
+                                </Link>
+                            </>
                         ) : (
                             <Link
                                 href="/account/signin"
