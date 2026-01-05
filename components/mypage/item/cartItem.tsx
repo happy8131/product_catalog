@@ -7,6 +7,7 @@ import { mutate } from 'swr';
 
 export default function CartItem({ cartItem }: { cartItem: CartItemDTO }) {
     const { session } = useAuthCheck(true);
+
     const handleClickQty = async (amount: number) => {
         const param = {
             account: session?.user?.email,
