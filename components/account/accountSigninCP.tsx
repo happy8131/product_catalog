@@ -11,7 +11,7 @@ export default function AccountSigninCP() {
         signIn('credentials', { username, password, callbackUrl: '/' });
     };
 
-    const handleClickKakao = (e) => {
+    const handleClickKakao = () => {
         signIn('kakao', { callbackUrl: '/' });
     };
 

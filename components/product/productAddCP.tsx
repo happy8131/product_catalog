@@ -10,7 +10,7 @@ export default function ProductAddCP() {
         result: '',
     });
 
-    const { session, router } = useAuthCheck();
+    const { session } = useAuthCheck(false);
 
     console.log(session);
 
@@ -87,7 +87,7 @@ export default function ProductAddCP() {
                             name="writer"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                             placeholder="작성자를 입력하세요"
-                            defaultValue={session?.user?.email}
+                            defaultValue={session?.user?.email as string}
                             readOnly
                         />
                     </div>
