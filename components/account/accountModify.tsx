@@ -1,11 +1,11 @@
 'use client';
 
 import { putAccount } from '@/actions/accountActions';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useActionState, useEffect } from 'react';
 
 export default function AccountModifyCP() {
-    const { data: session, status, update } = useSession();
+    const { data: session, status } = useSession();
 
     const [state, action, isPending] = useActionState(putAccount, {
         message: '',
@@ -44,7 +44,7 @@ export default function AccountModifyCP() {
                     <input
                         type="text"
                         name="email"
-                        defaultValue={session?.user?.email}
+                        defaultValue={session?.user?.email as string}
                         readOnly
                     ></input>
                 </div>
@@ -53,7 +53,7 @@ export default function AccountModifyCP() {
                     <input
                         type="text"
                         name="nickname"
-                        defaultValue={session?.user?.name}
+                        defaultValue={session?.user?.name as string}
                     ></input>
                 </div>
                 <div>
